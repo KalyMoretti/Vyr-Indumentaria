@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0b0d" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="Vyr Indumentaria: conjuntos deportivos y prendas de calidad. Envíos a todo el país." />
     <title>Vyr Indumentaria | Conjuntos y prendas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,7 +15,7 @@
         theme: {
           extend: {
             fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Poppins', 'sans-serif'] },
-            colors: { night: '#0b0b0d', surface: '#141417', violet: '#8b5cf6', lilac: '#c4b5fd' },
+            colors: { night: '#000000', surface: '#141417', violet: '#8b5cf6', lilac: '#c4b5fd' },
             boxShadow: { violet: '0 8px 28px rgba(139, 92, 246, 0.2)' },
           },
         },
@@ -24,12 +24,12 @@
     <style>
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body { margin: 0; background: #0b0b0d; color: #f4f4f5; font-family: Inter, sans-serif; }
+      body { margin: 0; background: #000000; color: #f4f4f5; font-family: Inter, sans-serif; }
       button, input { font: inherit; }
       ::selection { background: #8b5cf6; color: #fff; }
-      .hero-photo { background-image: linear-gradient(90deg, rgba(11, 11, 13, .9) 0%, rgba(11, 11, 13, .65) 48%, rgba(11, 11, 13, .12) 100%), url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=2000&q=85'); }
+      .hero-photo { background-image: linear-gradient(90deg, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, .65) 48%, rgba(0, 0, 0, .12) 100%), url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=2000&q=85'); }
       @media (max-width: 640px) {
-        .hero-photo { background-image: linear-gradient(0deg, rgba(11, 11, 13, .95) 0%, rgba(11, 11, 13, .72) 56%, rgba(11, 11, 13, .2) 100%), url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80'); }
+        .hero-photo { background-image: linear-gradient(0deg, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .72) 56%, rgba(0, 0, 0, .2) 100%), url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1000&q=80'); }
       }
       @media (prefers-reduced-motion: reduce) {
         *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -106,15 +106,13 @@
 
     <script>
       const numeroWhatsApp = '543765090546';
-      const talles = ['S', 'M', 'L', 'XL', 'XXL'];
-      const categorias = ['Todos', 'Conjuntos Jordan', 'Conjuntos Corteiz', 'Remeras / Shorts'];
+      const talles = ['S', 'M', 'L', 'XL'];
+      const categorias = ['Todos', 'Conjuntos completos'];
       const productos = [
-        { id: 1, nombre: 'Conjunto Verano Jor Cursiva', categoria: 'Conjuntos Jordan', imagen: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=82', alt: 'Conjunto deportivo claro', precioAnterior: 33598, precio: 16799 },
-        { id: 2, nombre: 'Conjunto Verano Jor Graffity', categoria: 'Conjuntos Jordan', imagen: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=82', alt: 'Conjunto deportivo en tonos oscuros', precioAnterior: 33598, precio: 16799 },
-        { id: 3, nombre: 'Conjunto Corteiz Black', categoria: 'Conjuntos Corteiz', imagen: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=82', alt: 'Conjunto deportivo negro', precioAnterior: 33598, precio: 16799 },
-        { id: 4, nombre: 'Conjunto Corteiz Trap', categoria: 'Conjuntos Corteiz', imagen: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=82', alt: 'Prenda deportiva de diseño', precioAnterior: 33598, precio: 16799 },
-        { id: 5, nombre: 'Remera deportiva esencial', categoria: 'Remeras / Shorts', imagen: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=900&q=82', alt: 'Remera deportiva de manga corta', precioAnterior: 23998, precio: 11999 },
-        { id: 6, nombre: 'Short deportivo clásico', categoria: 'Remeras / Shorts', imagen: 'https://images.unsplash.com/photo-1506629905607-d9e2c7b0c7c7?auto=format&fit=crop&w=900&q=82', alt: 'Short deportivo', precioAnterior: 19998, precio: 9999 },
+        { id: 1, nombre: 'Conjunto Corteiz Completo', descripcion: 'Remera + Pantalón + Buzo + Pasamontañas', categoria: 'Conjuntos completos', imagen: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=82', alt: 'Indumentaria completa, imagen de referencia', precioAnterior: 105000, precio: 52499, etiqueta: '50% OFF' },
+        { id: 2, nombre: 'Conjunto Jor Fly', descripcion: 'Buzo Hoodie + Pantalón Jogger Jordan', categoria: 'Conjuntos completos', imagen: 'https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=900&q=82', alt: 'Ropa deportiva, imagen de referencia', precioAnterior: 105000, precio: 50399, etiqueta: '52% OFF' },
+        { id: 3, nombre: 'Conjunto Syn Big Logo', descripcion: 'Remera + Pantalón + Buzo Hoodie', categoria: 'Conjuntos completos', imagen: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=82', alt: 'Indumentaria deportiva, imagen de referencia', precioAnterior: 105000, precio: 49349, etiqueta: '53% OFF' },
+        { id: 4, nombre: 'Conjunto NK / Trapstar Completo', descripcion: 'Remera + Pantalón + Buzo + Pasamontañas', categoria: 'Conjuntos completos', imagen: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=82', alt: 'Conjunto deportivo, imagen de referencia', precioAnterior: 105000, precio: 52499, etiqueta: '50% OFF' },
       ];
 
       let categoriaActiva = 'Todos';
@@ -140,11 +138,12 @@
           <article class="overflow-hidden rounded-2xl border border-white/[.07] bg-surface transition duration-300 hover:-translate-y-1 hover:border-violet/40 hover:shadow-violet">
             <div class="relative aspect-[4/4.5] overflow-hidden bg-[#1c1c20]">
               <img src="${producto.imagen}" alt="${producto.alt}" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 hover:scale-[1.035]" />
-              <span class="absolute left-3 top-3 rounded-lg bg-violet px-2.5 py-1.5 text-[10px] font-bold text-white">50% OFF</span>
+              <span class="absolute left-3 top-3 rounded-lg bg-violet px-2.5 py-1.5 text-[10px] font-bold text-white">${producto.etiqueta}</span>
             </div>
             <div class="p-4">
               <p class="mb-1.5 text-[10px] font-semibold uppercase text-lilac">${producto.categoria}</p>
               <h3 class="min-h-12 font-display text-base font-semibold leading-6 text-white">${producto.nombre}</h3>
+              <p class="mt-1 min-h-10 text-xs leading-5 text-zinc-400">${producto.descripcion}</p>
               <div class="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                 <span class="text-xs text-zinc-500 line-through">${formatoPrecio.format(producto.precioAnterior)}</span>
                 <span class="font-display text-xl font-bold text-white">${formatoPrecio.format(producto.precio)}</span>
@@ -183,7 +182,7 @@
         const producto = productos.find((item) => item.id === Number(botonPedido.dataset.pedir));
         const talle = talleElegido[producto.id];
         if (!talle) return;
-        const mensaje = `Hola Vyr Indumentaria, quiero pedir ${producto.nombre} en talle ${talle}.`;
+        const mensaje = `Hola Vyr Indumentaria! Quiero encargar el ${producto.nombre} en talle ${talle}`;
         window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener,noreferrer');
       });
 
