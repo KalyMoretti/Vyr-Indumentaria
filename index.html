@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11120f" />
+    <meta name="description" content="VYR Indumentaria: streetwear urbano, lanzamientos exclusivos y envíos a todo el país." />
+    <title>VYR Indumentaria | Streetwear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Barlow Condensed', 'sans-serif'],
+              body: ['DM Sans', 'sans-serif'],
+            },
+            colors: {
+              ink: '#11120f',
+              panel: '#191a17',
+              acid: '#d7ff3f',
+              paper: '#f3f2ec',
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; background: #11120f; color: #f3f2ec; font-family: 'DM Sans', sans-serif; }
+      button, input { font: inherit; }
+      ::selection { background: #d7ff3f; color: #11120f; }
+      .hero-image { background-image: linear-gradient(90deg, rgba(10, 11, 9, .94) 0%, rgba(10, 11, 9, .68) 44%, rgba(10, 11, 9, .08) 100%), url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=2000&q=85'); }
+      @media (max-width: 640px) {
+        .hero-image { background-image: linear-gradient(0deg, rgba(10, 11, 9, .94) 0%, rgba(10, 11, 9, .7) 48%, rgba(10, 11, 9, .12) 100%), url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1100&q=80'); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const { useMemo, useState } = React;
+
+      // Cambiá este valor por el WhatsApp del local, con código de país y sin + ni espacios.
+      const WHATSAPP_NUMBER = '543765090546';
+
+      const productsData = [
+        {
+          id: 1,
+          name: 'Conjunto Verano VYR Cursiva',
+          category: 'Conjuntos',
+          image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=82',
+          alt: 'Remera blanca de corte urbano',
+          badge: 'NUEVO',
+          price: 58900,
+          oldPrice: null,
+          sizes: ['S', 'M', 'L', 'XL'],
+        },
+        {
+          id: 2,
+          name: 'Conjunto Grafity Black',
+          category: 'Conjuntos',
+          image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=82',
+          alt: 'Prendas urbanas en tonos oscuros',
+          badge: '−20%',
+          price: 71900,
+          oldPrice: 89900,
+          sizes: ['S', 'M', 'L', 'XL'],
+        },
+        {
+          id: 3,
+          name: 'Remera Oversize Essential',
+          category: 'Remeras',
+          image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=82',
+          alt: 'Remera oversize de estilo minimalista',
+          badge: 'NUEVO',
+          price: 32900,
+          oldPrice: null,
+          sizes: ['S', 'M', 'L', 'XL'],
+        },
+        {
+          id: 4,
+          name: 'Hoodie VYR After Hours',
+          category: 'Buzos',
+          image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=82',
+          alt: 'Buzo urbano oscuro',
+          badge: '−15%',
+          price: 67900,
+          oldPrice: 79900,
+          sizes: ['S', 'M', 'L', 'XL'],
+        },
+      ];
+
+      const categories = ['Todos', 'Conjuntos', 'Remeras', 'Buzos'];
+      const faqs = [
+        { question: '¿Cómo realizo mi pedido?', answer: 'Elegí tu producto y talle, y escribinos por WhatsApp. Para encargarlo se abona una seña del 50%; coordinamos el saldo antes del envío o la entrega.' },
+        { question: '¿Qué medios de pago aceptan?', answer: 'Podés pagar por Mercado Pago o transferencia bancaria. Te compartimos los datos de pago al confirmar el pedido por WhatsApp.' },
+        { question: '¿Hacen envíos?', answer: 'Sí. Enviamos a todo el país por correo y también coordinamos entregas locales. Consultanos el costo y el tiempo estimado según tu zona.' },
+      ];
+
+      const formatPrice = (amount) => new Intl.NumberFormat('es-AR', {
+        style: 'currency', currency: 'ARS', maximumFractionDigits: 0,
+      }).format(amount);
+
+      function SocialLinks({ compact = false }) {
+        return (
+          <div className={`flex items-center gap-5 ${compact ? 'text-xs' : 'text-sm'}`}>
+            <a className="text-white/65 transition hover:text-acid" href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a>
+            <a className="text-white/65 transition hover:text-acid" href="https://www.tiktok.com/" target="_blank" rel="noreferrer">TikTok</a>
+          </div>
+        );
+      }
+
+      function Header({ search, setSearch, category, setCategory }) {
+        return (
+          <>
+            <div className="bg-acid px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[.16em] text-ink sm:text-[11px]">
+              Streetwear sin reglas <span className="mx-2">/</span> Envíos a todo el país
+            </div>
+            <header className="sticky top-0 z-20 border-b border-white/10 bg-ink/95 backdrop-blur-md">
+              <div className="mx-auto flex h-[66px] max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-8 lg:h-[76px] lg:px-12">
+                <a href="#inicio" aria-label="VYR Indumentaria, inicio" className="shrink-0 font-display text-[38px] font-black leading-none tracking-[.04em] text-white">VYR<span className="text-acid">.</span></a>
+                <nav aria-label="Redes sociales" className="hidden sm:block"><SocialLinks compact /></nav>
+                <label className="flex min-w-0 max-w-[230px] flex-1 items-center gap-2 border-b border-white/25 px-1 py-2 text-white/50 focus-within:border-acid sm:max-w-[250px]">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 shrink-0 fill-none stroke-current" strokeWidth="1.8"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4.4 4.4" /></svg>
+                  <input value={search} onChange={(event) => setSearch(event.target.value)} type="search" placeholder="Buscar prendas" aria-label="Buscar productos" className="min-w-0 w-full bg-transparent text-xs text-white outline-none placeholder:text-white/40" />
+                </label>
+                <a href="#catalogo" className="hidden border border-white/25 px-4 py-2 text-[10px] font-bold uppercase tracking-[.14em] transition hover:border-acid hover:text-acid md:inline-flex">Catálogo <span className="ml-3" aria-hidden="true">↘</span></a>
+              </div>
+              <div className="border-t border-white/[.06] px-4 sm:px-8 lg:px-12">
+                <nav aria-label="Filtrar por categoría" className="mx-auto flex max-w-[1440px] gap-6 overflow-x-auto py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {categories.map((item) => (
+                    <button key={item} type="button" onClick={() => setCategory(item)} aria-pressed={category === item} className={`shrink-0 text-[10px] font-bold uppercase tracking-[.16em] transition ${category === item ? 'text-acid' : 'text-white/50 hover:text-white'}`}>{item}</button>
+                  ))}
+                </nav>
+              </div>
+            </header>
+          </>
+        );
+      }
+
+      function Hero() {
+        return (
+          <section id="inicio" className="hero-image relative flex min-h-[510px] items-end overflow-hidden bg-cover bg-[58%_center] sm:min-h-[590px] sm:items-center lg:min-h-[650px] lg:bg-[center_42%]">
+            <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-12 sm:px-10 sm:py-16 lg:px-16">
+              <p className="mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.24em] text-acid sm:text-xs"><span className="h-px w-8 bg-acid"></span> Drop 01 / 2026</p>
+              <h1 className="max-w-[720px] font-display text-[clamp(4.3rem,13vw,8.8rem)] font-black uppercase leading-[.78] tracking-[-.02em] text-paper">VYR<br /><span className="text-acid">Streetwear</span><br />Eleva tu style.</h1>
+              <p className="mt-6 max-w-[390px] text-sm leading-6 text-white/70 sm:text-base">Lanzamientos exclusivos, conjuntos urbanos y envíos a todo el país.</p>
+              <a href="#catalogo" className="mt-8 inline-flex items-center gap-8 bg-acid px-5 py-4 text-[11px] font-bold uppercase tracking-[.14em] text-ink transition hover:bg-white">Ver catálogo <span aria-hidden="true" className="text-base">↘</span></a>
+            </div>
+            <span aria-hidden="true" className="absolute bottom-7 right-6 hidden font-display text-xs font-bold uppercase tracking-[.22em] text-white/55 [writing-mode:vertical-rl] lg:block">VYR Indumentaria — Argentina</span>
+          </section>
+        );
+      }
+
+      function ProductCard({ product }) {
+        const [size, setSize] = useState('');
+        const message = `Hola VYR! Quiero encargar el ${product.name} en talle ${size}`;
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+        return (
+          <article className="group min-w-0">
+            <div className="relative aspect-[4/5] overflow-hidden bg-[#22231f]">
+              <img src={product.image} alt={product.alt} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
+              <span className={`absolute left-3 top-3 px-2.5 py-1.5 text-[9px] font-bold uppercase tracking-[.13em] ${product.oldPrice ? 'bg-acid text-ink' : 'bg-paper text-ink'}`}>{product.badge}</span>
+              <span className="absolute bottom-3 right-3 bg-ink/80 px-2 py-1 text-[9px] font-semibold uppercase tracking-[.1em] text-white/80">VYR / 2026</span>
+            </div>
+            <div className="pt-4">
+              <div className="flex min-h-[48px] items-start justify-between gap-3">
+                <div>
+                  <p className="mb-1 text-[9px] font-bold uppercase tracking-[.17em] text-white/40">{product.category}</p>
+                  <h3 className="font-display text-xl font-semibold leading-tight text-paper sm:text-[22px]">{product.name}</h3>
+                </div>
+                <div className="shrink-0 text-right">
+                  {product.oldPrice && <p className="text-[10px] text-white/40 line-through">{formatPrice(product.oldPrice)}</p>}
+                  <p className="text-sm font-bold text-acid">{formatPrice(product.price)}</p>
+                </div>
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-2">
+                <fieldset className="flex items-center gap-1.5">
+                  <legend className="sr-only">Elegí el talle de {product.name}</legend>
+                  {product.sizes.map((item) => (
+                    <button key={item} type="button" onClick={() => setSize(item)} aria-pressed={size === item} aria-label={`Talle ${item}`} className={`grid h-8 w-8 place-items-center border text-[10px] font-semibold transition ${size === item ? 'border-acid bg-acid text-ink' : 'border-white/15 text-white/65 hover:border-white/60 hover:text-white'}`}>{item}</button>
+                  ))}
+                </fieldset>
+                {size ? (
+                  <a href={whatsappUrl} target="_blank" rel="noreferrer" aria-label={`Encargar ${product.name} talle ${size} por WhatsApp`} className="inline-flex min-h-9 items-center justify-center gap-2 bg-white px-3 text-[9px] font-bold uppercase tracking-[.08em] text-ink transition hover:bg-acid sm:px-3.5">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4 fill-current"><path d="M20.5 3.5A11.8 11.8 0 0 0 2 17.7L.5 23l5.5-1.4A11.8 11.8 0 0 0 23 11.8c0-3.1-.9-5.9-2.5-8.3ZM12 21a9.2 9.2 0 0 1-4.7-1.3l-.3-.2-3.3.9.9-3.2-.2-.3A9.1 9.1 0 1 1 12 21Zm5-6.8c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.1-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.8 4.2.7.3 1.2.4 1.6.5.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.3-.6-.4Z" /></svg>
+                    Encargar
+                  </a>
+                ) : (
+                  <button type="button" disabled className="inline-flex min-h-9 items-center justify-center border border-white/10 px-3 text-[9px] font-bold uppercase tracking-[.08em] text-white/35 sm:px-3.5">Elegí talle</button>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      }
+
+      function Catalog({ search, category }) {
+        const products = useMemo(() => productsData.filter((product) => {
+          const matchesCategory = category === 'Todos' || product.category === category;
+          const matchesSearch = product.name.toLocaleLowerCase('es').includes(search.trim().toLocaleLowerCase('es'));
+          return matchesCategory && matchesSearch;
+        }), [search, category]);
+
+        return (
+          <section id="catalogo" className="mx-auto max-w-[1440px] scroll-mt-36 px-5 py-16 sm:px-10 sm:py-20 lg:px-16">
+            <div className="mb-8 flex items-end justify-between border-b border-white/15 pb-5 sm:mb-10">
+              <div>
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[.22em] text-acid">Selección VYR / 001</p>
+                <h2 className="font-display text-4xl font-bold uppercase leading-none sm:text-5xl">Recién llegados<span className="text-acid">.</span></h2>
+              </div>
+              <span className="pb-1 text-[10px] uppercase tracking-[.14em] text-white/45">{products.length} piezas</span>
+            </div>
+            {products.length > 0 ? (
+              <div className="grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-12 lg:grid-cols-4 lg:gap-x-6">
+                {products.map((product) => <ProductCard key={product.id} product={product} />)}
+              </div>
+            ) : (
+              <p className="py-16 text-center text-sm text-white/55">No encontramos prendas con esa búsqueda.</p>
+            )}
+          </section>
+        );
+      }
+
+      function FAQ() {
+        const [openItem, setOpenItem] = useState(0);
+        return (
+          <section id="preguntas" className="border-y border-white/10 bg-panel">
+            <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-16 sm:px-10 sm:py-20 lg:grid-cols-[.8fr_1.2fr] lg:gap-24 lg:px-16">
+              <div>
+                <p className="mb-3 text-[10px] font-bold uppercase tracking-[.22em] text-acid">Info útil / antes de comprar</p>
+                <h2 className="font-display text-5xl font-bold uppercase leading-[.88] sm:text-6xl">Lo que<br />querés saber<span className="text-acid">.</span></h2>
+              </div>
+              <div className="border-t border-white/15">
+                {faqs.map((item, index) => (
+                  <div key={item.question} className="border-b border-white/15">
+                    <button type="button" className="flex w-full items-center justify-between gap-4 py-5 text-left" aria-expanded={openItem === index} aria-controls={`faq-answer-${index}`} onClick={() => setOpenItem(openItem === index ? -1 : index)}>
+                      <span className="text-sm font-semibold text-paper sm:text-base">{item.question}</span>
+                      <span aria-hidden="true" className={`font-display text-2xl text-acid transition-transform ${openItem === index ? 'rotate-45' : ''}`}>+</span>
+                    </button>
+                    {openItem === index && <p id={`faq-answer-${index}`} className="max-w-[600px] pb-5 pr-8 text-sm leading-6 text-white/55">{item.answer}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function Footer() {
+        return (
+          <footer className="mx-auto max-w-[1440px] px-5 pb-7 pt-10 sm:px-10 lg:px-16">
+            <div className="flex flex-col gap-7 border-b border-white/15 pb-8 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <a href="#inicio" className="font-display text-5xl font-black leading-none tracking-[.04em] text-white">VYR<span className="text-acid">.</span></a>
+                <p className="mt-2 text-[10px] uppercase tracking-[.18em] text-white/45">Vestite como sos.</p>
+              </div>
+              <div className="flex flex-col gap-4 sm:items-end">
+                <SocialLinks />
+                <a href="#preguntas" className="text-xs text-white/55 transition hover:text-acid">Pedidos, pagos y envíos</a>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 pt-5 text-[10px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
+              <p>© 2026 VYR Indumentaria. Todos los derechos reservados.</p>
+              <p>Precios sujetos a cambios sin previo aviso.</p>
+            </div>
+          </footer>
+        );
+      }
+
+      function App() {
+        const [search, setSearch] = useState('');
+        const [category, setCategory] = useState('Todos');
+        return (
+          <>
+            <Header search={search} setSearch={setSearch} category={category} setCategory={setCategory} />
+            <main>
+              <Hero />
+              <Catalog search={search} category={category} />
+              <FAQ />
+            </main>
+            <Footer />
+          </>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+  </body>
+</html>
